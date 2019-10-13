@@ -1,30 +1,15 @@
 ## Requirements
-- [dotnet build tools](https://todo)
+- [.NET Core 3.0 runtime](https://dotnet.microsoft.com/download/dotnet-core/3.0/runtime)
 
-## Build, run, test
+## Run and unit tests
 Navigate to project root folder and execute following commands:
-
-- To build project:
-    ```
-    dotnet build
-    ```
 
 - To execute project:
     ```
-    dotnet run --porject ShipmentDiscountCalculator
-    ```
-    or
-    ```
-    dotnet build
-    dotnet run --porject ShipmentDiscountCalculator --no-build
+    dotnet run --project ShipmentDiscountCalculator
     ```
 
 - To run unit tests:
     ```
     dotnet test ShipmentDiscountCalculatorTests -v n
-    ```
-    or
-    ```
-    dotnet build
-    dotnet test ShipmentDiscountCalculatorTests -v n --no-build
     ```
