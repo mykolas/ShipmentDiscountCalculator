@@ -14,7 +14,7 @@ namespace ShipmentDiscountCalculator.DiscountRules
             _maxDiscount = maxDiscount;
         }
 
-        public double GetDiscount(Transaction transaction, double accumulatedDiscount)
+        public double GetDiscount(Transaction transaction, double currentDiscount)
         {
             if (transaction == null)
             {
@@ -28,9 +28,9 @@ namespace ShipmentDiscountCalculator.DiscountRules
 
             lastDate = transaction.Date;
 
-            var discount = Math.Min(_remainingDiscount, accumulatedDiscount);
+            var discount = Math.Min(_remainingDiscount, currentDiscount);
 
-            _remainingDiscount = Math.Max(0, _remainingDiscount - accumulatedDiscount);
+            _remainingDiscount = Math.Max(0, _remainingDiscount - currentDiscount);
 
             return discount;
         }

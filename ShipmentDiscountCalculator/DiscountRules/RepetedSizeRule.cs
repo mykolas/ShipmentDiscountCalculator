@@ -12,7 +12,7 @@ namespace ShipmentDiscountCalculator.DiscountRules
         private readonly int _requiredRepetitionCount;
         private readonly IDictionary<ShipmentType, double> _priceByType;
         private int _currentRepetitionCount = 1;
-        private DateTime lastDate;
+        private DateTime _lastDate;
 
         public RepeatedSizeRule(ShipmentSize size, ShipmentType type, int requiredRepetitionCount, IDictionary<(ShipmentType, ShipmentSize), double> prices)
         {
@@ -25,26 +25,31 @@ namespace ShipmentDiscountCalculator.DiscountRules
                 .ToDictionary(s => s.Key.Item1, s => s.Value);
         }
 
-        public double GetDiscount(Transaction transaction, double accumulatedDiscount)
+        public double GetDiscount(Transaction transaction, double currentDiscount)
         {
-            if (transaction.Size != _size || transaction.Type != _type)
+            if (transaction == null)
             {
-                return accumulatedDiscount;
+                throw new ArgumentNullException(nameof(transaction));
             }
 
-            if (lastDate.Month != transaction.Date.Month || lastDate.Year != transaction.Date.Year)
+            if (transaction.Size != _size || transaction.Type != _type)
+            {
+                return currentDiscount;
+            }
+
+            if (_lastDate.Month != transaction.Date.Month || _lastDate.Year != transaction.Date.Year)
             {
                 _currentRepetitionCount = 1;
             }
 
-            lastDate = transaction.Date;
+            _lastDate = transaction.Date;
 
             if (_currentRepetitionCount++ == _requiredRepetitionCount)
             {
                 return _priceByType[transaction.Type];
             }
 
-            return accumulatedDiscount;
+            return currentDiscount;
         }
     }
 }

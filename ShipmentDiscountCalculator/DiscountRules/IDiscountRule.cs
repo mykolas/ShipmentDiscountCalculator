@@ -2,6 +2,6 @@
 {
     public interface IDiscountRule
     {
-        double GetDiscount(Transaction transaction, double accumulatedDiscount);
+        double GetDiscount(Transaction transaction, double currentDiscount);
     }
 }

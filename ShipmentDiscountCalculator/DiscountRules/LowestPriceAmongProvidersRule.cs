@@ -1,4 +1,5 @@
-﻿using ShipmentDiscountCalculator.Enums;
+﻿using System;
+using ShipmentDiscountCalculator.Enums;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,11 +22,16 @@ namespace ShipmentDiscountCalculator.DiscountRules
             _lowestPrice = _priceByType.Min(s => s.Value);
         }
 
-        public double GetDiscount(Transaction transaction, double accumulatedDiscount)
+        public double GetDiscount(Transaction transaction, double currentDiscount)
         {
+            if (transaction == null)
+            {
+                throw new ArgumentNullException(nameof(transaction));
+            }
+
             if (transaction.Size != _size)
             {
-                return accumulatedDiscount;
+                return currentDiscount;
             }
 
             var price = _priceByType[transaction.Type];
