@@ -16,6 +16,11 @@ namespace ShipmentDiscountCalculator.DiscountRules
 
         public double GetDiscount(Transaction transaction, double accumulatedDiscount)
         {
+            if (transaction == null)
+            {
+                throw new ArgumentNullException(nameof(transaction));
+            }
+
             if (lastDate.Month != transaction.Date.Month || lastDate.Year != transaction.Date.Year)
             {
                 _remainingDiscount = _maxDiscount;
