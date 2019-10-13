@@ -1,7 +1,7 @@
-﻿using ShipmentDiscountCalculator.DiscountRules;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ShipmentDiscountCalculator.DiscountRules;
 
-namespace ShipmentDiscountCalculator
+namespace ShipmentDiscountCalculator.Services
 {
     public class DiscountCalculator : IDiscountCalculator
     {

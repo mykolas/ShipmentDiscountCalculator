@@ -34,7 +34,7 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
         }
 
         [Fact]
-        public void GetDiscount_WhenTransactionIsNull_ReturnsZero()
+        public void GetDiscount_WhenTransactionIsNull_ThrowsArgumentNullException()
         {
             var rule = new LowestPriceAmongProvidersRule(ShipmentSize.S, _prices);
 

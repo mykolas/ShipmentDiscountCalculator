@@ -1,17 +1,15 @@
-﻿using ShipmentDiscountCalculator.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using ShipmentDiscountCalculator.Enums;
 
-namespace ShipmentDiscountCalculator
+namespace ShipmentDiscountCalculator.Services
 {
     public class TransactionPriceAppender : ITransactionPriceAppender
     {
         private readonly IDiscountCalculator _discountCalculator;
         private readonly IDictionary<(ShipmentType, ShipmentSize), double> _prices;
         private readonly string _dateFormat;
-
-        public string DateFormat1 { get; }
 
         public TransactionPriceAppender(
             IDiscountCalculator discountCalculator,
@@ -32,7 +30,7 @@ namespace ShipmentDiscountCalculator
                 var discount = _discountCalculator.GetDiscount(transaction);
                 var finalPrice = price - discount;
 
-                return $"{line} {finalPrice:0.00} {(discount == 0 ? "-" : $"{discount:0.00}")}";
+                return $"{line} {finalPrice:0.00} {(discount > 0 ? $"{discount:0.00}" : "-")}";
             }
             else
             {
@@ -46,8 +44,8 @@ namespace ShipmentDiscountCalculator
 
             if (values?.Length == 3
                 && DateTime.TryParseExact(values[0], _dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var date)
-                && Enum.TryParse<ShipmentSize>(values[1], out ShipmentSize size)
-                && Enum.TryParse<ShipmentType>(values[2], out ShipmentType type))
+                && Enum.TryParse<ShipmentSize>(values[1], out var size)
+                && Enum.TryParse<ShipmentType>(values[2], out var type))
             {
                 return new Transaction { Date = date, Size = size, Type = type };
             }
