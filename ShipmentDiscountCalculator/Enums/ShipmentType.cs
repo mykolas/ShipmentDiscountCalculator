@@ -1,8 +1,8 @@
-﻿namespace ShipmentDiscountCalculator
+﻿namespace ShipmentDiscountCalculator.Enums
 {
     public enum ShipmentType
     {
-        LaPoste,
-        MondialRelay
+        LP,
+        MR
     }
 }

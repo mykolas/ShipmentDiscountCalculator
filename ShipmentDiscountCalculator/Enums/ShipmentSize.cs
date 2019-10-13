@@ -1,9 +1,9 @@
-﻿namespace ShipmentDiscountCalculator
+﻿namespace ShipmentDiscountCalculator.Enums
 {
     public enum ShipmentSize
     {
-        Small,
-        Medium,
-        Large
+        S,
+        M,
+        L
     }
 }
