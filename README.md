@@ -4,7 +4,7 @@
 ## Run and unit tests
 Navigate to project root folder and execute following commands:
 
-- To execute project:
+- To execute project (if input file is not provided, default name 'input.txt' is assumed):
     ```
     dotnet run --project ShipmentDiscountCalculator input.txt
     ```

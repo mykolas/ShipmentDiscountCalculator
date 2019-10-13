@@ -11,17 +11,11 @@ namespace ShipmentDiscountCalculator
     {
         private static void Main(string[] args)
         {
-            var filePath = args.FirstOrDefault();
+            var filePath = args.FirstOrDefault() ?? "input.txt";
             
-            if (filePath == null)
-            {
-                Console.Error.WriteLine("Input file argument is missing");
-                return;
-            }
-
             if (!File.Exists(filePath))
             {
-                Console.Error.WriteLine("Provided input file does not exist.");
+                Console.Error.WriteLine($"Provided input file ({filePath}) does not exist.");
                 return;
             }
 
