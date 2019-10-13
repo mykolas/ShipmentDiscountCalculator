@@ -16,7 +16,7 @@ namespace ShipmentDiscountCalculatorTests.Services
         {
             Date = DateTime.Parse("2019-10-13"),
             Size = ShipmentSize.L,
-            Type = ShipmentType.LP
+            Provider = ShipmentProvider.LP
         };
 
         [Fact]

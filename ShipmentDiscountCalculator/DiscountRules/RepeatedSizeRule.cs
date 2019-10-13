@@ -6,22 +6,25 @@ using ShipmentDiscountCalculator.Entities;
 
 namespace ShipmentDiscountCalculator.DiscountRules
 {
+    /// <summary>
+    /// Once a calendar month, every nth shipment of specified size and provider will be free
+    /// </summary>
     public class RepeatedSizeRule : IDiscountRule
     {
         private readonly ShipmentSize _size;
-        private readonly ShipmentType _type;
+        private readonly ShipmentProvider _provider;
         private readonly int _requiredRepetitionCount;
-        private readonly IDictionary<ShipmentType, double> _priceByType;
+        private readonly IDictionary<ShipmentProvider, double> _priceByProvider;
         private int _currentRepetitionCount = 1;
         private DateTime _lastDate;
 
-        public RepeatedSizeRule(ShipmentSize size, ShipmentType type, int requiredRepetitionCount, IDictionary<(ShipmentType, ShipmentSize), double> prices)
+        public RepeatedSizeRule(ShipmentSize size, ShipmentProvider provider, int requiredRepetitionCount, IDictionary<(ShipmentProvider, ShipmentSize), double> prices)
         {
             _size = size;
-            _type = type;
+            _provider = provider;
             _requiredRepetitionCount = requiredRepetitionCount;
 
-            _priceByType = prices
+            _priceByProvider = prices
                 .Where(s => s.Key.Item2 == size)
                 .ToDictionary(s => s.Key.Item1, s => s.Value);
         }
@@ -33,7 +36,7 @@ namespace ShipmentDiscountCalculator.DiscountRules
                 throw new ArgumentNullException(nameof(transaction));
             }
 
-            if (transaction.Size != _size || transaction.Type != _type)
+            if (transaction.Size != _size || transaction.Provider != _provider)
             {
                 return currentDiscount;
             }
@@ -47,7 +50,7 @@ namespace ShipmentDiscountCalculator.DiscountRules
 
             if (_currentRepetitionCount++ == _requiredRepetitionCount)
             {
-                return _priceByType[transaction.Type];
+                return _priceByProvider[transaction.Provider];
             }
 
             return currentDiscount;

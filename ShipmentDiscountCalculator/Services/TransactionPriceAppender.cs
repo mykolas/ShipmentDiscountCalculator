@@ -9,12 +9,12 @@ namespace ShipmentDiscountCalculator.Services
     public class TransactionPriceAppender
     {
         private readonly IDiscountCalculator _discountCalculator;
-        private readonly IDictionary<(ShipmentType, ShipmentSize), double> _prices;
+        private readonly IDictionary<(ShipmentProvider, ShipmentSize), double> _prices;
         private readonly string _dateFormat;
 
         public TransactionPriceAppender(
             IDiscountCalculator discountCalculator,
-            IDictionary<(ShipmentType, ShipmentSize), double> prices,
+            IDictionary<(ShipmentProvider, ShipmentSize), double> prices,
             string dateFormat)
         {
             _discountCalculator = discountCalculator;
@@ -30,7 +30,7 @@ namespace ShipmentDiscountCalculator.Services
                 return $"{line} Ignored";
             }
 
-            var price = _prices[(transaction.Type, transaction.Size)];
+            var price = _prices[(transaction.Provider, transaction.Size)];
             var discount = _discountCalculator.GetDiscount(transaction);
             var finalPrice = price - discount;
 
@@ -45,9 +45,9 @@ namespace ShipmentDiscountCalculator.Services
             if (values?.Length == 3
                 && DateTime.TryParseExact(values[0], _dateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var date)
                 && Enum.TryParse<ShipmentSize>(values[1], out var size)
-                && Enum.TryParse<ShipmentType>(values[2], out var type))
+                && Enum.TryParse<ShipmentProvider>(values[2], out var provider))
             {
-                return new Transaction { Date = date, Size = size, Type = type };
+                return new Transaction { Date = date, Size = size, Provider = provider };
             }
 
             return null;

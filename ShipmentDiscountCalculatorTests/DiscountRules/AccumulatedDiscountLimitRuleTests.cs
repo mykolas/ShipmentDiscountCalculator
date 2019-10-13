@@ -86,7 +86,7 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
         {
             Date = DateTime.Parse(date),
             Size = ShipmentSize.L,
-            Type = ShipmentType.LP
+            Provider = ShipmentProvider.LP
         };
     }
 }

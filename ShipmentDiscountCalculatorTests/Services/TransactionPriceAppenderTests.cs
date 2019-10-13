@@ -15,14 +15,14 @@ namespace ShipmentDiscountCalculatorTests.Services
         public TransactionPriceAppenderTests()
         {
             _discountCalculatorMock = new Mock<IDiscountCalculator>();
-            var prices = new Dictionary<(ShipmentType, ShipmentSize), double>
+            var prices = new Dictionary<(ShipmentProvider, ShipmentSize), double>
             {
-                {(ShipmentType.LP, ShipmentSize.S), 1},
-                {(ShipmentType.LP, ShipmentSize.M), 2},
-                {(ShipmentType.LP, ShipmentSize.L), 3},
-                {(ShipmentType.MR, ShipmentSize.S), 4},
-                {(ShipmentType.MR, ShipmentSize.M), 5},
-                {(ShipmentType.MR, ShipmentSize.L), 6}
+                {(ShipmentProvider.LP, ShipmentSize.S), 1},
+                {(ShipmentProvider.LP, ShipmentSize.M), 2},
+                {(ShipmentProvider.LP, ShipmentSize.L), 3},
+                {(ShipmentProvider.MR, ShipmentSize.S), 4},
+                {(ShipmentProvider.MR, ShipmentSize.M), 5},
+                {(ShipmentProvider.MR, ShipmentSize.L), 6}
             };
 
             _transactionPriceAppender = new TransactionPriceAppender(

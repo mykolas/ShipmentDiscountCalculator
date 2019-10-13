@@ -3,6 +3,10 @@ using ShipmentDiscountCalculator.Entities;
 
 namespace ShipmentDiscountCalculator.DiscountRules
 {
+    /// <summary>
+    ///  Accumulated discounts cannot exceed provided limit in a calendar month. If there are not enough funds to fully
+    /// cover a discount this calendar month, it should be covered partially.
+    /// </summary>
     public class AccumulatedDiscountLimitRule : IDiscountRule
     {
         private DateTime _lastDate;

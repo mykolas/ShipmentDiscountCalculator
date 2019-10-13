@@ -6,21 +6,24 @@ using ShipmentDiscountCalculator.Entities;
 
 namespace ShipmentDiscountCalculator.DiscountRules
 {
+    /// <summary>
+    /// All shipments of specified size should always match the lowest package price for that size among the providers.
+    /// </summary>
     public class LowestPriceAmongProvidersRule : IDiscountRule
     {
         private readonly ShipmentSize _size;
-        private readonly IDictionary<ShipmentType, double> _priceByType;
+        private readonly IDictionary<ShipmentProvider, double> _priceByProvider;
         private readonly double _lowestPrice;
 
-        public LowestPriceAmongProvidersRule(ShipmentSize size, IDictionary<(ShipmentType, ShipmentSize), double> prices)
+        public LowestPriceAmongProvidersRule(ShipmentSize size, IDictionary<(ShipmentProvider, ShipmentSize), double> prices)
         {
             _size = size;
 
-            _priceByType = prices
+            _priceByProvider = prices
                 .Where(s => s.Key.Item2 == size)
                 .ToDictionary(s => s.Key.Item1, s => s.Value);
 
-            _lowestPrice = _priceByType.Min(s => s.Value);
+            _lowestPrice = _priceByProvider.Min(s => s.Value);
         }
 
         public double GetDiscount(Transaction transaction, double currentDiscount)
@@ -35,7 +38,7 @@ namespace ShipmentDiscountCalculator.DiscountRules
                 return currentDiscount;
             }
 
-            var price = _priceByType[transaction.Type];
+            var price = _priceByProvider[transaction.Provider];
 
             return price - _lowestPrice;
         }

@@ -7,6 +7,6 @@ namespace ShipmentDiscountCalculator.Entities
     {
         public DateTime Date { get; set; }
         public ShipmentSize Size { get; set; }
-        public ShipmentType Type { get; set; }
+        public ShipmentProvider Provider { get; set; }
     }
 }

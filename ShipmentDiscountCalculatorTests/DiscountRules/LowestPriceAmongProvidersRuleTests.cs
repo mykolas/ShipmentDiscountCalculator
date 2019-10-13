@@ -10,20 +10,20 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
 {
     public class LowestPriceAmongProvidersRuleTests
     {
-        private readonly Dictionary<(ShipmentType, ShipmentSize), double> _prices;
+        private readonly Dictionary<(ShipmentProvider, ShipmentSize), double> _prices;
         private readonly DateTime _date = DateTime.Parse("2019-10-13");
         private readonly Dictionary<ShipmentSize, double> _lowestPriceBySize;
 
         public LowestPriceAmongProvidersRuleTests()
         {
-            _prices = new Dictionary<(ShipmentType, ShipmentSize), double>
+            _prices = new Dictionary<(ShipmentProvider, ShipmentSize), double>
             {
-                {(ShipmentType.LP, ShipmentSize.S), 1.50 },
-                {(ShipmentType.LP, ShipmentSize.M), 4.90 },
-                {(ShipmentType.LP, ShipmentSize.L), 6.90 },
-                {(ShipmentType.MR, ShipmentSize.S), 2 },
-                {(ShipmentType.MR, ShipmentSize.M), 3 },
-                {(ShipmentType.MR, ShipmentSize.L), 4 }
+                {(ShipmentProvider.LP, ShipmentSize.S), 1.50 },
+                {(ShipmentProvider.LP, ShipmentSize.M), 4.90 },
+                {(ShipmentProvider.LP, ShipmentSize.L), 6.90 },
+                {(ShipmentProvider.MR, ShipmentSize.S), 2 },
+                {(ShipmentProvider.MR, ShipmentSize.M), 3 },
+                {(ShipmentProvider.MR, ShipmentSize.L), 4 }
             };
 
             _lowestPriceBySize = _prices
@@ -42,14 +42,14 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
         }
 
         [Theory]
-        [InlineData(ShipmentSize.L, ShipmentType.LP, ShipmentSize.S)]
-        [InlineData(ShipmentSize.M, ShipmentType.LP, ShipmentSize.S)]
-        [InlineData(ShipmentSize.L, ShipmentType.MR, ShipmentSize.S)]
-        [InlineData(ShipmentSize.M, ShipmentType.MR, ShipmentSize.S)]
-        public void GetDiscount_WhenSizeDoesNotMatch_DoesNotChangeDiscount(ShipmentSize size, ShipmentType type, ShipmentSize requiredSize)
+        [InlineData(ShipmentSize.L, ShipmentProvider.LP, ShipmentSize.S)]
+        [InlineData(ShipmentSize.M, ShipmentProvider.LP, ShipmentSize.S)]
+        [InlineData(ShipmentSize.L, ShipmentProvider.MR, ShipmentSize.S)]
+        [InlineData(ShipmentSize.M, ShipmentProvider.MR, ShipmentSize.S)]
+        public void GetDiscount_WhenSizeDoesNotMatch_DoesNotChangeDiscount(ShipmentSize size, ShipmentProvider provider, ShipmentSize requiredSize)
         {
             var rule = new LowestPriceAmongProvidersRule(requiredSize, _prices);
-            var transaction = new Transaction { Date = _date, Size = size, Type = type };
+            var transaction = new Transaction { Date = _date, Size = size, Provider = provider };
             const int currentDiscount = 10;
 
             var newDiscount = rule.GetDiscount(transaction, currentDiscount);
@@ -58,21 +58,21 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
         }
 
         [Theory]
-        [InlineData(ShipmentSize.S, ShipmentType.LP)]
-        [InlineData(ShipmentSize.S, ShipmentType.MR)]
-        [InlineData(ShipmentSize.M, ShipmentType.LP)]
-        [InlineData(ShipmentSize.M, ShipmentType.MR)]
-        [InlineData(ShipmentSize.L, ShipmentType.LP)]
-        [InlineData(ShipmentSize.L, ShipmentType.MR)]
-        public void GetDiscount_WhenSizeMatch_ReturnsLowestSizePriceAmongProviders(ShipmentSize requiredSize, ShipmentType type)
+        [InlineData(ShipmentSize.S, ShipmentProvider.LP)]
+        [InlineData(ShipmentSize.S, ShipmentProvider.MR)]
+        [InlineData(ShipmentSize.M, ShipmentProvider.LP)]
+        [InlineData(ShipmentSize.M, ShipmentProvider.MR)]
+        [InlineData(ShipmentSize.L, ShipmentProvider.LP)]
+        [InlineData(ShipmentSize.L, ShipmentProvider.MR)]
+        public void GetDiscount_WhenSizeMatch_ReturnsLowestSizePriceAmongProviders(ShipmentSize requiredSize, ShipmentProvider provider)
         {
             var rule = new LowestPriceAmongProvidersRule(requiredSize, _prices);
-            var transaction = new Transaction { Date = _date, Size = requiredSize, Type = type };
+            var transaction = new Transaction { Date = _date, Size = requiredSize, Provider = provider };
             const int currentDiscount = 10;
 
             var newDiscount = rule.GetDiscount(transaction, currentDiscount);
 
-            var expectedDiscount = _prices[(type, requiredSize)] - _lowestPriceBySize[requiredSize];
+            var expectedDiscount = _prices[(provider, requiredSize)] - _lowestPriceBySize[requiredSize];
             Assert.Equal(expectedDiscount, newDiscount);
         }
     }
