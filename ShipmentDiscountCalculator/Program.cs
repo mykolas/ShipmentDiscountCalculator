@@ -11,13 +11,27 @@ namespace ShipmentDiscountCalculator
     {
         private static void Main(string[] args)
         {
+            var filePath = args.FirstOrDefault();
+            
+            if (filePath == null)
+            {
+                Console.Error.WriteLine("Input file argument is missing");
+                return;
+            }
+
+            if (!File.Exists(filePath))
+            {
+                Console.Error.WriteLine("Provided input file does not exist.");
+                return;
+            }
+
             var discountCalculator = new DiscountCalculator(Rules);
+            
             var transactionPriceAppender = new TransactionPriceAppender(
                 discountCalculator,
                 Configuration.DefaultShippingPrices,
                 Configuration.DateFormat);
 
-            var filePath = args.FirstOrDefault() ?? @"C:\Code\input.txt";
             var lines = File.ReadAllLines(filePath);
 
             foreach (var line in lines)
@@ -31,11 +45,13 @@ namespace ShipmentDiscountCalculator
             new LowestPriceAmongProvidersRule(
                 Configuration.LowestPriceAmongProvidersRuleSize,
                 Configuration.DefaultShippingPrices),
+
             new RepeatedSizeRule(
                 Configuration.RepeatedSizeRuleSize,
                 Configuration.RepeatedSizeRuleProvider,
                 Configuration.RepeatedSizeRuleRepetitionCount,
                 Configuration.DefaultShippingPrices),
+            
             new AccumulatedDiscountLimitRule(Configuration.MaximumMonthlyDiscountRuleLimit)
         };
     }

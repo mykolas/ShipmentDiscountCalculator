@@ -6,7 +6,7 @@ Navigate to project root folder and execute following commands:
 
 - To execute project:
     ```
-    dotnet run --project ShipmentDiscountCalculator
+    dotnet run --project ShipmentDiscountCalculator input.txt
     ```
 
 - To run unit tests:
