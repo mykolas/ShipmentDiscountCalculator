@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ShipmentDiscountCalculator.DiscountRules;
+using ShipmentDiscountCalculator.Entities;
 
 namespace ShipmentDiscountCalculator.Services
 {

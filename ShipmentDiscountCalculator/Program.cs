@@ -7,12 +7,11 @@ using ShipmentDiscountCalculator.Services;
 
 namespace ShipmentDiscountCalculator
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var rules = GetRules();
-            var discountCalculator = new DiscountCalculator(rules);
+            var discountCalculator = new DiscountCalculator(Rules);
             var transactionPriceAppender = new TransactionPriceAppender(
                 discountCalculator,
                 Configuration.DefaultShippingPrices,
@@ -27,7 +26,7 @@ namespace ShipmentDiscountCalculator
             }
         }
 
-        private static IList<IDiscountRule> GetRules() => new List<IDiscountRule>
+        private static IList<IDiscountRule> Rules => new List<IDiscountRule>
         {
             new LowestPriceAmongProvidersRule(
                 Configuration.LowestPriceAmongProvidersRuleSize,

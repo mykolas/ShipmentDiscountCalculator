@@ -3,7 +3,7 @@ using ShipmentDiscountCalculator.DiscountRules;
 using ShipmentDiscountCalculator.Enums;
 using System.Collections.Generic;
 using System.Linq;
-using ShipmentDiscountCalculator;
+using ShipmentDiscountCalculator.Entities;
 using Xunit;
 
 namespace ShipmentDiscountCalculatorTests.DiscountRules
@@ -16,7 +16,7 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
 
         public LowestPriceAmongProvidersRuleTests()
         {
-            _prices = new Dictionary<(ShipmentType, ShipmentSize), double>()
+            _prices = new Dictionary<(ShipmentType, ShipmentSize), double>
             {
                 {(ShipmentType.LP, ShipmentSize.S), 1.50 },
                 {(ShipmentType.LP, ShipmentSize.M), 4.90 },

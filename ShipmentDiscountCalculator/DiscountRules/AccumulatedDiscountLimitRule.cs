@@ -1,10 +1,11 @@
 ﻿using System;
+using ShipmentDiscountCalculator.Entities;
 
 namespace ShipmentDiscountCalculator.DiscountRules
 {
     public class AccumulatedDiscountLimitRule : IDiscountRule
     {
-        private DateTime lastDate;
+        private DateTime _lastDate;
         private double _remainingDiscount;
         private readonly double _maxDiscount;
 
@@ -21,12 +22,12 @@ namespace ShipmentDiscountCalculator.DiscountRules
                 throw new ArgumentNullException(nameof(transaction));
             }
 
-            if (lastDate.Month != transaction.Date.Month || lastDate.Year != transaction.Date.Year)
+            if (_lastDate.Month != transaction.Date.Month || _lastDate.Year != transaction.Date.Year)
             {
                 _remainingDiscount = _maxDiscount;
             }
 
-            lastDate = transaction.Date;
+            _lastDate = transaction.Date;
 
             var discount = Math.Min(_remainingDiscount, currentDiscount);
 

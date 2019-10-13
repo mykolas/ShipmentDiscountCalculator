@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Moq;
-using ShipmentDiscountCalculator;
+using ShipmentDiscountCalculator.Entities;
 using ShipmentDiscountCalculator.Enums;
 using ShipmentDiscountCalculator.Services;
 using Xunit;

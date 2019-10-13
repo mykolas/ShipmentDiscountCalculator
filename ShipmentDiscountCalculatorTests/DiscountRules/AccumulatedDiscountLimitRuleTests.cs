@@ -1,7 +1,7 @@
-﻿using ShipmentDiscountCalculator;
-using ShipmentDiscountCalculator.DiscountRules;
+﻿using ShipmentDiscountCalculator.DiscountRules;
 using ShipmentDiscountCalculator.Enums;
 using System;
+using ShipmentDiscountCalculator.Entities;
 using Xunit;
 
 namespace ShipmentDiscountCalculatorTests.DiscountRules

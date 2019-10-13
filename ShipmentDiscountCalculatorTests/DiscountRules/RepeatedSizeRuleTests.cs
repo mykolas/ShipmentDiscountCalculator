@@ -2,15 +2,16 @@
 using ShipmentDiscountCalculator.DiscountRules;
 using ShipmentDiscountCalculator.Enums;
 using System.Collections.Generic;
-using ShipmentDiscountCalculator;
+using ShipmentDiscountCalculator.Entities;
 using Xunit;
 
 namespace ShipmentDiscountCalculatorTests.DiscountRules
 {
     public class RepeatedSizeRuleTests
     {
+        private const int RequiredRepetitionCount = 10;
         private readonly Dictionary<(ShipmentType, ShipmentSize), double> _prices =
-            new Dictionary<(ShipmentType, ShipmentSize), double>()
+            new Dictionary<(ShipmentType, ShipmentSize), double>
             {
                 {(ShipmentType.LP, ShipmentSize.S), 1.50},
                 {(ShipmentType.LP, ShipmentSize.M), 4.90},
@@ -20,13 +21,12 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
                 {(ShipmentType.MR, ShipmentSize.L), 4}
             };
 
-        private readonly int _requiredRepetitionCount = 10;
         private readonly DateTime _date = DateTime.Parse("2019-10-13");
 
         [Fact]
         public void GetDiscount_WhenTransactionIsNull_ThrowsArgumentNullException()
         {
-            var rule = new RepeatedSizeRule(ShipmentSize.S, ShipmentType.MR, _requiredRepetitionCount, _prices);
+            var rule = new RepeatedSizeRule(ShipmentSize.S, ShipmentType.MR, RequiredRepetitionCount, _prices);
 
             Assert.Throws<ArgumentNullException>("transaction", () => rule.GetDiscount(null, 10));
         }
@@ -38,10 +38,10 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
         public void GetDiscount_WhenSizeDoesNotMatch_DoesNotApplyDiscount(ShipmentSize size, ShipmentSize requiredSize)
         {
             const ShipmentType type = ShipmentType.MR;
-            var rule = new RepeatedSizeRule(requiredSize, type, _requiredRepetitionCount, _prices);
+            var rule = new RepeatedSizeRule(requiredSize, type, RequiredRepetitionCount, _prices);
             const int currentDiscount = 100;
 
-            for (var i = 0; i <= _requiredRepetitionCount; i++)
+            for (var i = 0; i <= RequiredRepetitionCount; i++)
             {
                 var transaction = new Transaction
                 {
@@ -60,10 +60,10 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
         public void GetDiscount_WhenTypeDoesNotMatch_DoesNotApplyDiscount(ShipmentType type, ShipmentType requiredType)
         {
             const ShipmentSize size = ShipmentSize.L;
-            var rule = new RepeatedSizeRule(size, requiredType, _requiredRepetitionCount, _prices);
+            var rule = new RepeatedSizeRule(size, requiredType, RequiredRepetitionCount, _prices);
             const int currentDiscount = 100;
 
-            for (var i = 0; i <= _requiredRepetitionCount; i++)
+            for (var i = 0; i <= RequiredRepetitionCount; i++)
             {
                 var transaction = new Transaction
                 {
@@ -86,10 +86,10 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
         [InlineData(ShipmentType.MR, ShipmentSize.L)]
         public void GetDiscount_WhenSizeAndTypeMatchAndSameMonth_ApplyDiscountForRequiredRepetitionCount(ShipmentType type, ShipmentSize size)
         {
-            var rule = new RepeatedSizeRule(size, type, _requiredRepetitionCount, _prices);
+            var rule = new RepeatedSizeRule(size, type, RequiredRepetitionCount, _prices);
             const int currentDiscount = 100;
 
-            for (var i = 1; i < _requiredRepetitionCount; i++)
+            for (var i = 1; i < RequiredRepetitionCount; i++)
             {
                 var transaction = new Transaction
                 {
@@ -122,10 +122,10 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
         [InlineData(ShipmentType.MR, ShipmentSize.L)]
         public void GetDiscount_WhenSizeAndTypeMatchButDifferentMonth_DoNotApplyDiscount(ShipmentType type, ShipmentSize size)
         {
-            var rule = new RepeatedSizeRule(size, type, _requiredRepetitionCount, _prices);
+            var rule = new RepeatedSizeRule(size, type, RequiredRepetitionCount, _prices);
             const int currentDiscount = 100;
 
-            for (var i = 1; i < _requiredRepetitionCount; i++)
+            for (var i = 1; i < RequiredRepetitionCount; i++)
             {
                 var transaction = new Transaction
                 {

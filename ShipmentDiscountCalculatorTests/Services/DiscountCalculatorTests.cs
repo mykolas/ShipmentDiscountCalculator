@@ -5,7 +5,7 @@ using ShipmentDiscountCalculator.DiscountRules;
 using ShipmentDiscountCalculator.Services;
 using Xunit;
 using Moq;
-using ShipmentDiscountCalculator;
+using ShipmentDiscountCalculator.Entities;
 using ShipmentDiscountCalculator.Enums;
 
 namespace ShipmentDiscountCalculatorTests.Services

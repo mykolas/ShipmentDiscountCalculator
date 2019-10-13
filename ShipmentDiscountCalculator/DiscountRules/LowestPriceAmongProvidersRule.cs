@@ -2,6 +2,7 @@
 using ShipmentDiscountCalculator.Enums;
 using System.Collections.Generic;
 using System.Linq;
+using ShipmentDiscountCalculator.Entities;
 
 namespace ShipmentDiscountCalculator.DiscountRules
 {

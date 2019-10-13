@@ -1,4 +1,6 @@
-﻿namespace ShipmentDiscountCalculator.DiscountRules
+﻿using ShipmentDiscountCalculator.Entities;
+
+namespace ShipmentDiscountCalculator.DiscountRules
 {
     public interface IDiscountRule
     {

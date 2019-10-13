@@ -1,4 +1,6 @@
-﻿namespace ShipmentDiscountCalculator
+﻿using ShipmentDiscountCalculator.Entities;
+
+namespace ShipmentDiscountCalculator.Services
 {
     public interface IDiscountCalculator
     {

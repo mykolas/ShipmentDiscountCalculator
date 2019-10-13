@@ -1,7 +1,7 @@
-﻿using ShipmentDiscountCalculator.Enums;
-using System;
+﻿using System;
+using ShipmentDiscountCalculator.Enums;
 
-namespace ShipmentDiscountCalculator
+namespace ShipmentDiscountCalculator.Entities
 {
     public class Transaction
     {

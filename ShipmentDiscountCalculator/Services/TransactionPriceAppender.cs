@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using ShipmentDiscountCalculator.Entities;
 using ShipmentDiscountCalculator.Enums;
 
 namespace ShipmentDiscountCalculator.Services
 {
-    public class TransactionPriceAppender : ITransactionPriceAppender
+    public class TransactionPriceAppender
     {
         private readonly IDiscountCalculator _discountCalculator;
         private readonly IDictionary<(ShipmentType, ShipmentSize), double> _prices;
@@ -24,18 +25,17 @@ namespace ShipmentDiscountCalculator.Services
         public string Append(string line)
         {
             var transaction = ParseTransaction(line);
-            if (transaction != null)
-            {
-                var price = _prices[(transaction.Type, transaction.Size)];
-                var discount = _discountCalculator.GetDiscount(transaction);
-                var finalPrice = price - discount;
-
-                return $"{line} {finalPrice:0.00} {(discount > 0 ? $"{discount:0.00}" : "-")}";
-            }
-            else
+            if (transaction == null)
             {
                 return $"{line} Ignored";
             }
+
+            var price = _prices[(transaction.Type, transaction.Size)];
+            var discount = _discountCalculator.GetDiscount(transaction);
+            var finalPrice = price - discount;
+
+            return $"{line} {finalPrice:0.00} {(discount > 0 ? $"{discount:0.00}" : "-")}";
+
         }
 
         private Transaction ParseTransaction(string line)
