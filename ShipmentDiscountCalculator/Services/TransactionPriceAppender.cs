@@ -1,7 +1,7 @@
-﻿using System;
+﻿using ShipmentDiscountCalculator.Enums;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using ShipmentDiscountCalculator.Enums;
 
 namespace ShipmentDiscountCalculator
 {

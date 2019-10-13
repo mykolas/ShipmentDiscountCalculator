@@ -1,8 +1,8 @@
-﻿using System;
-using Xunit;
+﻿using ShipmentDiscountCalculator;
 using ShipmentDiscountCalculator.DiscountRules;
-using ShipmentDiscountCalculator;
 using ShipmentDiscountCalculator.Enums;
+using System;
+using Xunit;
 
 namespace ShipmentDiscountCalculatorTests.DiscountRules
 {
@@ -12,7 +12,7 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
         public void GetDiscount_WhenTransactionIsNull_ThrowsArgumentNullException()
         {
             var accumulatedDiscountLimitRule = new AccumulatedDiscountLimitRule(20);
-            
+
             Assert.Throws<ArgumentNullException>("transaction", () => accumulatedDiscountLimitRule.GetDiscount(null, 10));
         }
 
@@ -71,7 +71,7 @@ namespace ShipmentDiscountCalculatorTests.DiscountRules
 
             var discount1 = accumulatedDiscountLimitRule.GetDiscount(firstMonthTransaction1, 10);
             var discount2 = accumulatedDiscountLimitRule.GetDiscount(firstMonthTransaction2, 9);
-            
+
             var discount3 = accumulatedDiscountLimitRule.GetDiscount(secondMonthTransaction1, 19);
             var discount4 = accumulatedDiscountLimitRule.GetDiscount(secondMonthTransaction2, 30);
 

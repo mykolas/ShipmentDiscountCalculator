@@ -22,7 +22,7 @@ namespace ShipmentDiscountCalculator
 
         // Lowest Price Among Providers Rule settings
         public static ShipmentSize LowestPriceAmongProvidersRuleSize => ShipmentSize.S;
-        
+
         // Repeated Size Rule settings
         public static int RepeatedSizeRuleRepetitionCount => 3;
         public static ShipmentSize RepeatedSizeRuleSize => ShipmentSize.L;

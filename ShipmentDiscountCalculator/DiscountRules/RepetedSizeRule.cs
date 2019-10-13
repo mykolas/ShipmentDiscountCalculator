@@ -19,7 +19,7 @@ namespace ShipmentDiscountCalculator.DiscountRules
             _size = size;
             _type = type;
             _requiredRepetitionCount = requiredRepetitionCount;
-         
+
             _priceByType = prices
                 .Where(s => s.Key.Item2 == size)
                 .ToDictionary(s => s.Key.Item1, s => s.Value);

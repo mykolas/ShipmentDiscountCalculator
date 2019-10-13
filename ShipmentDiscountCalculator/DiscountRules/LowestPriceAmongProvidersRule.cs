@@ -1,5 +1,4 @@
 ﻿using ShipmentDiscountCalculator.Enums;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +17,7 @@ namespace ShipmentDiscountCalculator.DiscountRules
             _priceByType = prices
                 .Where(s => s.Key.Item2 == size)
                 .ToDictionary(s => s.Key.Item1, s => s.Value);
-            
+
             _lowestPrice = _priceByType.Min(s => s.Value);
         }
 

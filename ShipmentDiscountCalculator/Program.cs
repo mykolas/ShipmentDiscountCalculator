@@ -1,10 +1,8 @@
-﻿using System;
+﻿using ShipmentDiscountCalculator.DiscountRules;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using ShipmentDiscountCalculator.DiscountRules;
-using ShipmentDiscountCalculator.Enums;
 
 namespace ShipmentDiscountCalculator
 {

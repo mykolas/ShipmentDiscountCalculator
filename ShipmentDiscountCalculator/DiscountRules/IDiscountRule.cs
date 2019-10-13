@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace ShipmentDiscountCalculator.DiscountRules
+﻿namespace ShipmentDiscountCalculator.DiscountRules
 {
     public interface IDiscountRule
     {

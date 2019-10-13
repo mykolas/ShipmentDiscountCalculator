@@ -1,11 +1,9 @@
-﻿using ShipmentDiscountCalculator.DiscountRules;
-using System.Collections.Generic;
-
-namespace ShipmentDiscountCalculator
+﻿namespace ShipmentDiscountCalculator
 {
     public class TransactionPriceAppenderTests
     {
-        public TransactionPriceAppenderTests() {
+        public TransactionPriceAppenderTests()
+        {
         }
 
         public void Append_WhenLineIsInvalid_AppendsIgnoredFlag()

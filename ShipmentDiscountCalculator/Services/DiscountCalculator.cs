@@ -7,7 +7,8 @@ namespace ShipmentDiscountCalculator
     {
         private readonly IList<IDiscountRule> _rules;
 
-        public DiscountCalculator(IList<IDiscountRule> rules) {
+        public DiscountCalculator(IList<IDiscountRule> rules)
+        {
             _rules = rules;
         }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using Xunit;
-using ShipmentDiscountCalculator.DiscountRules;
+﻿using ShipmentDiscountCalculator.DiscountRules;
 using ShipmentDiscountCalculator.Enums;
 using System.Collections.Generic;
 
