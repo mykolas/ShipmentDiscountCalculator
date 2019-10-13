@@ -12,14 +12,12 @@ namespace ShipmentDiscountCalculator
     {
         static void Main(string[] args)
         {
-            var configuration = new Configuration();
-
-            var rules = GetRules(configuration);
+            var rules = GetRules();
             var discountCalculator = new DiscountCalculator(rules);
             var transactionPriceAppender = new TransactionPriceAppender(
                 discountCalculator,
-                configuration.DefaultShippingPrices,
-                configuration.DateFormat);
+                Configuration.DefaultShippingPrices,
+                Configuration.DateFormat);
 
             var filePath = args.FirstOrDefault() ?? @"C:\Code\input.txt";
             var lines = File.ReadAllLines(filePath);
@@ -30,17 +28,17 @@ namespace ShipmentDiscountCalculator
             }
         }
 
-        private static IList<IDiscountRule> GetRules(IConfiguration configuration) => new List<IDiscountRule>
+        private static IList<IDiscountRule> GetRules() => new List<IDiscountRule>
         {
             new LowestPriceAmongProvidersRule(
-                configuration.LowestPriceAmongProvidersSize,
-                configuration.DefaultShippingPrices),
+                Configuration.LowestPriceAmongProvidersRuleSize,
+                Configuration.DefaultShippingPrices),
             new RepeatedSizeRule(
-                configuration.RepeatedSizeRuleSize,
-                ShipmentType.LP,
-                configuration.RepeatedSizeRuleRepetitionCount,
-                configuration.DefaultShippingPrices),
-            new AccumulatedDiscountLimitRule(configuration.MaximumMonthlyDiscount)
+                Configuration.RepeatedSizeRuleSize,
+                Configuration.RepeatedSizeRuleProvider,
+                Configuration.RepeatedSizeRuleRepetitionCount,
+                Configuration.DefaultShippingPrices),
+            new AccumulatedDiscountLimitRule(Configuration.MaximumMonthlyDiscountRuleLimit)
         };
     }
 }

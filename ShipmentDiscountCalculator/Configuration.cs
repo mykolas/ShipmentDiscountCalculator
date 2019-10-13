@@ -3,29 +3,11 @@ using System.Collections.Generic;
 
 namespace ShipmentDiscountCalculator
 {
-    public interface IConfiguration
+    public static class Configuration
     {
-        string DateFormat { get; }
+        public static string DateFormat => "yyyy-MM-dd";
 
-        IDictionary<(ShipmentType, ShipmentSize), double> DefaultShippingPrices { get; }
-
-        // Accumulated Discount Limit Rule settings
-        double MaximumMonthlyDiscount { get; }
-        
-        // Lowest Price Among Providers rule settings
-        ShipmentSize LowestPriceAmongProvidersSize { get; }
-
-        // Repeated Size rule settings
-        int RepeatedSizeRuleRepetitionCount { get; }
-        ShipmentSize RepeatedSizeRuleSize { get; }
-        ShipmentType RepeatedSizeRuleProvider { get; }
-    }
-
-    public class Configuration : IConfiguration
-    {
-        public string DateFormat => "yyyy-MM-dd";
-
-        public IDictionary<(ShipmentType, ShipmentSize), double> DefaultShippingPrices => new Dictionary<(ShipmentType, ShipmentSize), double>()
+        public static IDictionary<(ShipmentType, ShipmentSize), double> DefaultShippingPrices => new Dictionary<(ShipmentType, ShipmentSize), double>()
         {
             {(ShipmentType.LP, ShipmentSize.S), 1.50 },
             {(ShipmentType.LP, ShipmentSize.M), 4.90 },
@@ -34,13 +16,16 @@ namespace ShipmentDiscountCalculator
             {(ShipmentType.MR, ShipmentSize.M), 3 },
             {(ShipmentType.MR, ShipmentSize.L), 4 }
         };
+
+        // Accumulated Discount Limit Rule settings
+        public static double MaximumMonthlyDiscountRuleLimit => 10;
+
+        // Lowest Price Among Providers Rule settings
+        public static ShipmentSize LowestPriceAmongProvidersRuleSize => ShipmentSize.S;
         
-        public double MaximumMonthlyDiscount => 10;
-
-        public ShipmentSize LowestPriceAmongProvidersSize => ShipmentSize.S;
-
-        public int RepeatedSizeRuleRepetitionCount => 3;
-        public ShipmentSize RepeatedSizeRuleSize => ShipmentSize.L;
-        public ShipmentType RepeatedSizeRuleProvider => ShipmentType.LP;
+        // Repeated Size Rule settings
+        public static int RepeatedSizeRuleRepetitionCount => 3;
+        public static ShipmentSize RepeatedSizeRuleSize => ShipmentSize.L;
+        public static ShipmentType RepeatedSizeRuleProvider => ShipmentType.LP;
     }
 }
